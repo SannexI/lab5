@@ -1,0 +1,83 @@
+*{
+	margin:0;
+	padding:0;
+	box-sizing:border-box; /*задаю границы padding and border без учета margin */
+}
+body{
+	display:flex;
+	min-height:90vh;
+	background-color:black;
+	padding:60px;
+	justify-content:center;
+	align-items:center;
+}
+
+#game>div {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+}
+.wall {
+    background-color: darkblue;
+    border: 2px solid lightsteelblue;
+	border-radius:20%;
+    box-sizing: border-box;
+}
+.coin{
+	background-image:url(coinc.png);
+	background-position:center center;
+	background-repeat: no-repeat;
+	background-size:15%;
+}
+.pacman{
+	background-image:url(pacma.png);
+	background-size:100%;
+	transition: transform 0.5s;
+}
+.pacman:focus/*фокусировка на нажатии кнопки*/{
+	transform:rotate(45deg);
+}
+.bg{
+	background-color:black;
+}
+#score {
+    font-size: 50px;  
+    font-family: 'Arial';  
+    font-weight: bold;  
+    position: absolute;  
+    top: 10%;  
+	padding-right:auto;  
+    color: Indigo; 
+	transform: translateY(10%, 50%);
+	right:80%;
+}
+h1{
+	font-size: 150px;  
+    font-family: 'Arial';  
+    font-weight: bold; 
+	position:fixed;
+    top: 45%;  
+    color: Indigo; 
+	display: none;
+    position: fixed;
+	background-color: white;
+    border: 2px solid black;
+	transform: translateX(50%, 50%);
+}
+.Pincy{
+	background-image:url(pi.png);
+	background-size:170%;	
+}
+.Incy{
+	background-image:url(inky.png);
+	background-size:100%;
+}
+.Blynky{
+	background-image:url();
+	background-size:100%;
+}
+.Clyde{
+	background-image:url();
+	background-size:100%;
+}
+
