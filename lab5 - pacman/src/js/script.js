@@ -29,9 +29,10 @@ var Incy = {
 	x:7,
 	y:8
 }
-
+//var pacIndex = 124; //количество поинтов на карте
 var points = 0;
-var remain = 0;
+var pacmanSound = new Audio('pacman_chomp.wav');
+pacmanSound.loop = false;
 function draw() {
     var html = "";
     var gameMap = document.getElementById("game");
@@ -55,74 +56,68 @@ function draw() {
     }
     gameMap.innerHTML = html;
 	document.getElementById("score").innerText = "Points: " + points;
-	document.addEventListener('keyup', movePacman);
+	document.addEventListener('keydown', MoveEvent);
 	ScoreWin();
 }	
 
 draw();
 
-function movePacman(){
-	if(event.code === "ArrowRight"){
-        if(pacman.y + 1 < game[pacman.x].length && game[pacman.x][pacman.y+1] !== 1){
-            game[pacman.x][pacman.y] = 3;
-            pacman.y += 1;
-			if(game[pacman.x][pacman.y] === 2){
-				points++;
-				remain--;
-			}
-			if(game[pacman.x][pacman.y] === 5 || game[pacman.x][pacman.y] === 6){
-				points+=200;
-			}
-            game[pacman.x][pacman.y] = 4;
-            draw();
-        } 
-    } else if(event.code === "ArrowLeft"){
-        if(pacman.y - 1 >= 0 && game[pacman.x][pacman.y-1] !== 1){
-            game[pacman.x][pacman.y] = 3;
-            pacman.y -= 1;
-			if(game[pacman.x][pacman.y] === 2){
-				points++;
-				remain--;
-			}
-			if(game[pacman.x][pacman.y] === 5 || game[pacman.x][pacman.y] === 6 ){
-				points+=200;
-			}
-            game[pacman.x][pacman.y] = 4;
-            draw();
-        } 
-    }else if(event.code === "ArrowDown"){
-         if(pacman.x + 1 < game[pacman.y].length && game[pacman.x+1][pacman.y] !== 1){
-            game[pacman.x][pacman.y] = 3;
-            pacman.x += 1;
-			if(game[pacman.x][pacman.y] === 2){
-				points++;
-				remain--;
-			}
-			if(game[pacman.x][pacman.y] === 5 || game[pacman.x][pacman.y] === 6){
-				points+=200;
-			}
-            game[pacman.x][pacman.y] = 4;
-            draw();
-        } 
-	}
-	else if(event.code === "ArrowUp"){
-        if(pacman.x - 1 >= 0 && game[pacman.x-1][pacman.y] !== 1){
-            game[pacman.x][pacman.y] = 3;
-            pacman.x -= 1;
-			if(game[pacman.x][pacman.y] === 2){
-				points++;
-				remain--;
-			}
-			if(game[pacman.x][pacman.y] === 5 || game[pacman.x][pacman.y] === 6){
-				points+=200;
-			}
-            game[pacman.x][pacman.y] = 4;
-            draw();
-        } 
-	}
-	console.log('1', remain);
-}
 
+
+function movePacman(direction) {
+    var pacmanElement = document.querySelector('.pacman');
+
+    if (direction === "up") {
+        pacmanElement.style.backgroundImage.transform = "url(pacUp)";
+    } else if (direction === "down") {
+        pacmanElement.style.backgroundImage = "url(pacDown)";
+    } else if (direction === "left") {
+        pacmanElement.style.backgroundImage = "url(pacLeft)";
+    } else if (direction === "right") {
+        pacmanElement.style.backgroundImage = "url(pacRight)";
+    }
+	
+    if(direction === "right" && pacman.y + 1 < game[pacman.x].length && game[pacman.x][pacman.y + 1] !== 1){
+        game[pacman.x][pacman.y] = 3;
+        pacman.y += 1;
+    } else if(direction === "left" && pacman.y - 1 >= 0 && game[pacman.x][pacman.y - 1] !== 1){
+        game[pacman.x][pacman.y] = 3;
+        pacman.y -= 1;
+    } else if(direction === "down" && pacman.x + 1 < game.length && game[pacman.x + 1][pacman.y] !== 1){
+		pacman.dir = 'down';
+        game[pacman.x][pacman.y] = 3;
+        pacman.x += 1;
+    } else if(direction === "up" && pacman.x - 1 >= 0 && game[pacman.x - 1][pacman.y] !== 1){
+		pacman.dir = 'up';
+        game[pacman.x][pacman.y] = 3;
+        pacman.x -= 1;
+    }
+    
+    if(game[pacman.x][pacman.y] === 2){
+        points++;
+        if(pacmanSound.ended || pacmanSound.started || pacmanSound.paused) {
+			pacmanSound.currentTime = 0.01;  // Сбрасываем время воспроизведения в начало с небольшим значением
+			pacmanSound.play();  // Воспроизводим звук
+			pacmanSound.volume = 0.05;
+		}	
+    } else if(game[pacman.x][pacman.y] === 5 || game[pacman.x][pacman.y] === 6 || game[pacman.x][pacman.y] === 7){
+        points += 200;
+		pacmanSound.play();
+    }
+    game[pacman.x][pacman.y] = 4;
+    draw();
+}
+function MoveEvent(){
+	if(event.code === 'ArrowRight'){
+        movePacman('right');
+    } else if(event.code === 'ArrowLeft'){
+        movePacman('left');
+    } else if(event.code === 'ArrowDown'){
+        movePacman('down');
+    } else if(event.code === 'ArrowUp'){
+        movePacman('up');
+    }
+}
 function ScoreWin() {
     var totalCoins = 0;
     for (var i = 0; i < game.length; i++) {
@@ -132,15 +127,15 @@ function ScoreWin() {
             }
         }
     }
-console.log('2',totalCoins);
+console.log('total:', totalCoins);
 	var message = document.getElementById("Win");
-	if(totalCoins == 0 ){
+	if(totalCoins == 0){
 		setTimeout(restart, 15000);
-		document.removeEventListener('keyup', movePacman);
+		document.removeEventListener('keydown', MoveEvent);
 		if(message){
 			message.innerText = "YOU WIN!";
 			message.style.display = 'block';
-			document.removeEventListener('keyup', movePacman);
+			document.removeEventListener('keydown', MoveEvent);
 			setTimeout(function(){
 				message.style.display = "none";
 			}, 15000);

@@ -4,7 +4,7 @@
 	box-sizing:border-box; /*задаю границы padding and border без учета margin */
 }
 body{
-	display:flex;
+	display:grid;
 	min-height:90vh;
 	background-color:black;
 	padding:60px;
@@ -14,9 +14,10 @@ body{
 
 #game>div {
     display: inline-block;
-    width: 50px;
-    height: 50px;
+    width: 5vh;
+    height: 5vh;
 }
+
 .wall {
     background-color: darkblue;
     border: 2px solid lightsteelblue;
@@ -29,14 +30,29 @@ body{
 	background-repeat: no-repeat;
 	background-size:15%;
 }
-.pacman{
+.pacman, #pacman{
 	background-image:url(pacma.png);
-	background-size:100%;
-	transition: transform 0.5s;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
-.pacman:focus/*фокусировка на нажатии кнопки*/{
-	transform:rotate(45deg);
+
+.pacUp {
+    transform: rotate(0deg); /* Поворот вверх (0 градусов) */
 }
+
+.pacDown {
+    transform: rotate(180deg); /* Поворот вниз (180 градусов) */
+}
+
+.pacLeft {
+    transform: rotate(-90deg); /* Поворот влево (-90 градусов) */
+}
+
+.pacRight {
+    transform: rotate(90deg); /* Поворот вправо (90 градусов) */
+}
+
+
 .bg{
 	background-color:black;
 }
@@ -80,4 +96,3 @@ h1{
 	background-image:url();
 	background-size:100%;
 }
-
