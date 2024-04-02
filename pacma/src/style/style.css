@@ -1,0 +1,136 @@
+*{
+	margin:0;
+	padding:0;
+	box-sizing:border-box; /*задаю границы padding and border без учета margin */
+	z-index:1;
+}
+body{
+	display:flex;
+	min-height:90vh;
+	background-color:black;
+	padding:60px;
+	justify-content:center;
+	align-items:center;
+}
+
+#game>div {
+    display: inline-block;
+    width: 4vh;
+    height: 4vh;
+}
+
+.wall {
+    background-color: darkblue;
+    border: 2px solid lightsteelblue;
+	border-radius:20%;
+    box-sizing: border-box;
+}
+.coin{
+	background-image:url(coinc.png);
+	background-position:center center;
+	background-repeat: no-repeat;
+	background-size:15%;
+	z-index: 9; 
+}
+.pacman, #pacman{
+	background-image:url(pacma.png);
+    background-size: cover;
+	transition: transform 0.3s;
+	z-index:10;
+}
+.cherry{
+	background-image:url(cherry1.png);
+	background-position:center center;
+	background-repeat: no-repeat;
+	background-size:100%;
+	z-index:9;
+}
+.pacman.up {
+    transform: rotate(-90deg); /* Поворот пакмена вверх */
+}
+
+.pacman.down {
+    transform: rotate(90deg); /* Поворот пакмена вниз */
+}
+
+.pacman.left {
+    transform: scaleX(-1); /* Поворот пакмена влево */
+}
+
+.pacman.right {
+    transform: scaleX(1); /* Поворот пакмена вправо */
+}
+
+
+.bg{
+	background-color:black;
+	z-index:11;
+}
+#score {
+    font-size: 50px;  
+    font-family: 'Arial';  
+    font-weight: bold;  
+    position: absolute;  
+    top: 10%;  
+	padding-right:auto;  
+    color: Indigo; 
+	transform: translateY(10%, 50%);
+	right:80%;
+}
+h1{
+	font-size: 150px;  
+    font-family: 'Arial';  
+    font-weight: bold; 
+	position:fixed;
+    top: 45%;  
+    color: Indigo; 
+	display: none;
+    position: fixed;
+	background-color: white;
+    border: 2px solid black;
+	transform: translateX(50%, 50%);
+	z-index:99;
+}
+.Pincy{
+	background-image:url(pi.png);
+	background-size:170%;
+	z-index:5;
+}
+.Incy{
+	background-image:url(inky.png);
+	background-size:100%;
+}
+.Blynky{
+	background-image:url();
+	background-size:100%;
+}
+.Clyde{
+	background-image:url();
+	background-size:100%;
+}
+h2{
+	font-size: 100px;  
+    font-family: 'Arial';  
+    font-weight: bold; 
+	position:fixed;
+    top: 45%;  
+    color: Indigo; 
+	display: none;
+    position: fixed;
+	background-color: white;
+    border: 2px solid black;
+	transform: translateX(50%, 50%);
+	z-index:99;
+}
+/*#startButton{
+	font-size: 50px;  
+    font-family: 'Arial';  
+    font-weight: bold;  
+    position: absolute;  
+    bottom:10%;  
+	padding-right:auto;  
+    color: Indigo; 
+	transform: translateY(10%, 50%);
+	right:80%;
+}
+*/
